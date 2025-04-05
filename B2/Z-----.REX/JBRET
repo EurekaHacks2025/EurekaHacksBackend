@@ -1,0 +1,8 @@
+//RETRIEVE JOB (ACCT),'RETRIEVE DATA',CLASS=A,MSGCLASS=X
+//STEP1    EXEC PGM=IEBGENER
+//SYSPRINT DD SYSOUT=*                       (Utility messages)
+//SYSIN    DD *                              (Control card: search key)
+  INCLUDE COND=(1,7,CH,EQ,C'TESTKEY')        (Search for key at position 1)
+//SYSUT1   DD DSN=Z64305.DATA,DISP=SHR       (Input dataset)
+//SYSUT2   DD SYSOUT=*                       (Output to job log)
+//*

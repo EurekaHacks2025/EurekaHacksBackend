@@ -1,0 +1,17 @@
+//DELETE   JOB (ACCT),'DELETE DATA',CLASS=A,MSGCLASS=X
+//STEP1    EXEC PGM=IEBGENER
+//SYSPRINT DD SYSOUT=*                       (Utility messages)
+//SYSIN    DD *                              (Control card: exclude key)
+  OMIT COND=(1,7,CH,EQ,C'TESTKEY')           (Exclude key at position 1)
+//SYSUT1   DD DSN=Z64305.DATA,DISP=SHR       (Input dataset)
+//SYSUT2   DD DSN=Z64305.DATA.NEW,           (Temporary dataset)
+//            DISP=(NEW,CATLG,DELETE),
+//            SPACE=(TRK,(1,1)),LRECL=80,RECFM=FB
+//*
+//STEP2    EXEC PGM=IDCAMS                   (Replace original dataset)
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+  DELETE Z64305.DATA
+  ALTER Z64305.DATA.NEW - 
+         NEWNAME(Z64305.DATA)
+//*
