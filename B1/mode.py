@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+from flask_cors import CORS
 import requests
 from ultralytics import YOLOWorld
 import cv2
@@ -12,12 +13,12 @@ import base64
 import os
 
 app = Flask(__name__)
-
+CORS(app) # Add cors policy
 # Configuration
 DATABASE = 'usrdata.db'
 SECRET_KEY = os.urandom(16)  # Used for additional encryption layer
 
-# Initialize database
+# DB Init
 def init_db():
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
